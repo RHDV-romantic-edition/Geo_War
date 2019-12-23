@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from .models import Scoreboard, Squard, Comand
 
-# Create your views here.
+def mapindex(request):
+    return render(request, 'mapindex.html',)
