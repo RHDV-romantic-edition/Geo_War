@@ -21,7 +21,7 @@ class Squard(models.Model):
     time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
-        return 'word 1 = {0} , word 2 = {1}, word 3 = {2}, command = {3}'.format(self.word_1, self.word_2, self.word_3, self.team.name)
+        return '{0}.{1}.{2} team = {3}'.format(self.word_1, self.word_2, self.word_3, self.team.name)
         
 
 class Scoreboard(models.Model):
