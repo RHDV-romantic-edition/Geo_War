@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Coordinates
+from .models import Comand, Scoreboard, Squard
 
 
-admin.site.register(Coordinates)
 
-
-# Register your models here.
+admin.site.register(Comand)
+admin.site.register(Scoreboard)
+admin.site.register(Squard)
