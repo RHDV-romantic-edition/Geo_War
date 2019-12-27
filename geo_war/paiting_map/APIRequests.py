@@ -16,7 +16,8 @@ def GetCoordinates(words):
     Words = {}
     API_KEY = 'UVTJLDJ2'
     r = requests.get('https://api.what3words.com/v3/convert-to-coordinates?key={3}&words={0}.{1}.{2}&format=json'.format(words[0],words[1],words[2],API_KEY))
-    print(r.json()['square'])
+    print(r.text)
 
 if __name__ == '__main__':
-    Get3Words((51.521251, -0.203586))
+    word1, word2, word3 = input().split()
+    GetCoordinates((word1, word2, word3))

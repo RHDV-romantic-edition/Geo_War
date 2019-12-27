@@ -1,8 +1,8 @@
 from django.db import models
-import uuid 
+import uuid
 # Create your models here.
 class Comand(models.Model):
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for comand")
     name = models.CharField(max_length=100, help_text="TeamName")
     black_squard = models.ManyToManyField('Squard', blank=True, help_text="The list of Squards that belongs to this project")
@@ -13,7 +13,7 @@ class Comand(models.Model):
         return self.name
 
 class Squard(models.Model):
-    
+
     word_1 = models.CharField(max_length=100, help_text="Word 1")
     word_2 = models.CharField(max_length=100, help_text="Word 2")
     word_3 = models.CharField(max_length=100, help_text="Word 3")
@@ -21,13 +21,11 @@ class Squard(models.Model):
     time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
-        return '{0}.{1}.{2} team = {3}'.format(self.word_1, self.word_2, self.word_3, self.team.name)
-        
+        return '{0}.{1}.{2} team = {3}'.format(self.word_1, self.word_2, self.word_3, self.team)#.name)
+
 
 class Scoreboard(models.Model):
     team = models.OneToOneField(Comand, on_delete=models.SET_NULL, null=True, help_text="The teams")
     score = models.IntegerField(default=0)
     def __str__(self):
         return "Score = {0} , comand - {1}".format(self.score, self.team.name)
-
-        
