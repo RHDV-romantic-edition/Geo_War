@@ -1,16 +1,17 @@
 <html>
   <head>
+    {% load static %}s
     <script src="https://assets.what3words.com/sdk/v3/what3words.js?key=ECNR5N1Y"></script>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=929b9810-5982-4c63-9d07-ea0472a8df20&lang=ru_RU" type="text/javascript"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-    <script src="../static/yandex.js"></script>
+    <script src={% static 'yandex.js' %}></script>
+    <script src={% static 'Yandex.addon.Controls.js' %}></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
-    <script src='../static/Yandex.addon.Controls.js'></script>
     <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href='../static/deco.css'>
-    <link rel="stylesheet" href='../static/styles.css'>
-    <link rel="stylesheet" href='../static/reset.css'>
+    <link rel="stylesheet" href={% static 'deco.css' %}>
+    <link rel="stylesheet" href={% static 'styles.css' %}>
+    <link rel="stylesheet" href={% static 'reset.css' %}>
     <style>
 
     </style>
@@ -21,7 +22,7 @@
     <div id="app">
         <div class="block">
         </div>
-            
+
             <div v-if='!entered'class='container'>
                 <p>Welcome to Geo_War</p>
                 <select @change ='clr'v-model='team' class="team-select">
@@ -46,13 +47,13 @@
                       </button>
                 </div>
             </div>
-            
+
         </div>
-        
+
         <div id="map"></div >
     </div>
-    
+
 
   </body>
-  <script src="../static/vue.js"></script>
+  <script src={% static 'vue.js' %}></script>
 </html>
