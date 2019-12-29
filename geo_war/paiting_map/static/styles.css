@@ -27,7 +27,7 @@ select{
 .block {
 	width: 100%;
 	height: 100px;
-	background:url('../Без\ имени-1.png') #eee no-repeat center center;
+	background:url('./ico.png') #eee no-repeat center center;
 	background-size:250px;
 	display: block;
 }

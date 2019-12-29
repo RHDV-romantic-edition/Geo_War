@@ -9,7 +9,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+CSRF_COOKIE_NAME = "XSRF-TOKEN"
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

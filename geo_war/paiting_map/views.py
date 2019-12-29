@@ -6,9 +6,10 @@ def mapindex(request):
     return render(request, 'mapindex.html',)
 
 def SquareAdd(request):
-    coordinates = (request.POST['latitude'], request.POST['longitude'])
+    coordinates = (request.POST.get('lat', 'error'), request.POST.get('lng', 'error')
     Words = APIRequests.Get3Words(coordinates)
     Team = request.POST['team']
+    print('lol')
     print('Square created, word_1 = {0}, word_2 = {1}, word_3 = {2}, team = {3}'.format(Words['Word_1'],Words['Word_2'],Words['Word_3'],Team))
     Sq = Squard(word_1 = Words['Word_1'], word_2 = Words['Word_2'], word_3 = Words['Word_3'])
     Sq.save()

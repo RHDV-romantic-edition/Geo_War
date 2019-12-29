@@ -16,15 +16,21 @@ new Vue({
             map.addEventListener("click", function(e){
                 console.log(e.latlng);
                 Url = 'http://127.0.0.1:8000/map/square_add/'
+                //axios.defaults.xsrfHeaderName = "X-CSRFToken";
                 axios({
                   method: 'post',
                   url: Url,
                   data: {
                     'coords': e.latlng,
-                  }
+                  },
+                  xsrfHeaderName: "X-CSRFToken",
+                headers:
+                 {
+                   "X-CSRFToken": "{{csrf_token}}"
+                 }
                 })
                 .then(response => {
-	                 console.log(response)
+                     console.log(response)
                  })
                  .catch(error => {
                    console.log(error.response)
