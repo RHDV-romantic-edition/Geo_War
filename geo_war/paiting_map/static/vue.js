@@ -21,7 +21,7 @@ new Vue({
                   method: 'post',
                   url: Url,
                   data: {
-                    'coords': e.latlng,
+                    'lol': 'kek'
                   },
                   xsrfHeaderName: "X-CSRFToken",
                 headers:
