@@ -11,13 +11,26 @@ new Vue({
             console.log(this.entered);
 
             //...............................
-            var map = L.map('map').setView([0, 0], 19);
+            var map = L.map('map').setView([0, 0], 2);
             L.yandex('yandex#map').addTo(map);
             map.addEventListener("click", function(e){
                 console.log(e.latlng);
+                Url = 'http://127.0.0.1:8000/map/square_add/'
+                axios({
+                  method: 'post',
+                  url: Url,
+                  data: {
+                    'coords': e.latlng,
+                  }
+                })
+                .then(response => {
+	                 console.log(response)
+                 })
+                 .catch(error => {
+                   console.log(error.response)
+});
             });
-
-            function drawGrid() 
+            function drawGrid()
             {
                 const zoom = map.getZoom();
                 const loadFeatures = zoom > 17;
@@ -52,11 +65,11 @@ new Vue({
                         }
                     }).addTo(map);
                     }).catch(console.error);
-                } 
-                else 
+                }
+                else
                 {
                 // If the grid layer already exists, remove it as the zoom level no longer requires the grid to be displayed
-                if (typeof grid_layer !== 'undefined') 
+                if (typeof grid_layer !== 'undefined')
                 {
                     map.removeLayer(grid_layer);
                 }
@@ -66,7 +79,7 @@ new Vue({
             map.whenReady(drawGrid);
             map.on('move', drawGrid);
             //.........................................
-   
+
     },
         clr:function(){
             document.documentElement.style.setProperty('--btn-color', this.team);
@@ -76,7 +89,7 @@ new Vue({
 
     },
 
-}); 
+});
 //document.querySelector('.team-select').addEventListener("click", function(){
-    
+
 // /*color: blue violet blueviolet green lightgreen lightblue yellow red coral orange cyan hotpink;  */
