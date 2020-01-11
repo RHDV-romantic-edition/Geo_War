@@ -7,6 +7,6 @@ from django.views.generic import RedirectView
 
 urlpatterns = [   
     path('admin/', admin.site.urls),
-    path('map/', include('paiting_map.urls')),
-    path('', RedirectView.as_view(url='/map/', permanent=True)),
+    path('home/', include('paiting_map.urls')),
+    path('', RedirectView.as_view(url='/home/', permanent=True)),
 ]
