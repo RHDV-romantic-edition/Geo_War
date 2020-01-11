@@ -6,7 +6,6 @@ def mapindex(request):
     return render(request, 'mapindex.html')
 
 def SquareAdd(request):
-
     if request.method == 'POST':
         res = request.body.decode("utf-8")
     res = res.split('{')[2]
