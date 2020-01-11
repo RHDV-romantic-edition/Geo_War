@@ -8,12 +8,9 @@ def mapindex(request):
 def SquareAdd(request):
     if request.method == 'POST':
         res = request.body.decode("utf-8")
-    res = res.split('{')[2]
-    res = res[:len(res)-2:]
-    res = res.split(',')
-    lat = res[0][6::]
-    lng = res[1][6::]
-    coordinates = [lat, lng]
+        res = eval(res)
+        res = res['cords']
+    coordinates = (res['lat'], res['lng'])
     Words = APIRequests.Get3Words(coordinates)
     print('Square created, word_1 = {0}, word_2 = {1}, word_3 = {2}, team = lol'.format(Words['Word_1'],Words['Word_2'],Words['Word_3']))
     Sq = Squard(word_1 = Words['Word_1'], word_2 = Words['Word_2'], word_3 = Words['Word_3'])
@@ -33,4 +30,4 @@ def SquareSearch(request):
     return render(request, 'mapindex.html', data)
 
 def AlexWork(request):
-    return render(request, 'test.html',)
+    return render(request, 'test.html')
