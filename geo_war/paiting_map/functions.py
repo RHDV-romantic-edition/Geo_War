@@ -1,8 +1,8 @@
-from .models import Scoreboard, Squard, Comand
+from .models import Squard, Comand
 
 def take_command_information(*args):
     if args['id']:
-        print(Comand.objects.filter(id__exact = args['id']))
+        print(Comand.objects.filter(name__exact = 'Green'))
     return None
 
 def register_team():

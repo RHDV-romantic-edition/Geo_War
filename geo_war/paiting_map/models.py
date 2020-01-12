@@ -6,25 +6,17 @@ class Comand(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for comand")
     name = models.CharField(max_length=100, help_text="TeamName")
     black_squard = models.ManyToManyField('Squard', blank=True, help_text="The list of Squards that belongs to this project")
-    Place = models.OneToOneField('Scoreboard', blank=True, on_delete=models.SET_NULL, null=True, help_text="The team place in Scoreboard")
-    password = models.IntegerField(default=1111) 
+    password = models.IntegerField(default=1111)
 
     def __str__(self):
         return self.name
 
 class Squard(models.Model):
-
     word_1 = models.CharField(max_length=100, help_text="Word 1")
     word_2 = models.CharField(max_length=100, help_text="Word 2")
     word_3 = models.CharField(max_length=100, help_text="Word 3")
+    team = models.OneToOneField(Comand,on_delete = models.SET_NULL, null = True, help_text="Comand that is the best for this")
     time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
-        return '{0}.{1}.{2}'.format(self.word_1, self.word_2, self.word_3)#.name)
-
-
-class Scoreboard(models.Model):
-    team = models.OneToOneField(Comand, on_delete=models.SET_NULL, null=True, help_text="The teams")
-    score = models.IntegerField(default=0)
-    def __str__(self):
-        return "Score = {0} , comand - {1}".format(self.score, self.team.name)
+        return '{0}.{1}.{2}'.format(self.word_1, self.word_2, self.word_3)

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import Scoreboard, Squard, Comand
+from .models import Squard, Comand
 from . import APIRequests
 import json
 
