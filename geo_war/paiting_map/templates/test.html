@@ -18,7 +18,7 @@
   </head>
 
   <body>
-    <h2> LOL </h2>
+    <h2> {{bse}} </h2>
     <div id="map"></div>
     <script>
       // Create the Google Map
@@ -87,12 +87,10 @@
          console.log(error.response)
         });
       });
-      var data = {
-      'green': '55.7424;55.742373;37.629358;37.62931'
-    }
+      var data = {'1':'1'}
     for (var cell in data){
-      cords = data[cell].split(';')
-      console.log(parseInt(cords[0]))
+      cords = cell.split(';')
+      console.log(cords[0])
     var rectangle = new google.maps.Rectangle({
   strokeColor: '#FF000000',
   strokeOpacity: 0.8,

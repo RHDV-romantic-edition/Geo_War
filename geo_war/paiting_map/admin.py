@@ -12,5 +12,5 @@ class ScoreboardAdmin(admin.ModelAdmin):
 
 @admin.register(Squard)
 class SquardAdmin(admin.ModelAdmin):
-    list_display = ('team','word_1','word_2' ,'word_3')
+    list_display = ('word_1','word_2' ,'word_3')
     #fields = [('word_1','word_2','word_3'),'team', 'time']

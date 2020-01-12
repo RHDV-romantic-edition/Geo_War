@@ -5,6 +5,22 @@ from . import APIRequests
 def mapindex(request):
     return render(request, 'mapindex.html')
 
+
+def GetSq():
+    data = []
+    bse = {}
+    for e in Squard.objects.all():
+        data.append(e.__str__())
+    for e in range(len(data)):
+        a = data[e].split('.')
+        data[e] = APIRequests.GetCoordinates((a[0],a[1],a[2]))
+        bse[data[e]] = 'red'
+    print(bse)
+    return(bse)
+
+
+
+
 def SquareAdd(request):
     if request.method == 'POST':
         res = request.body.decode("utf-8")
@@ -30,4 +46,13 @@ def SquareSearch(request):
     return render(request, 'mapindex.html', data)
 
 def AlexWork(request):
-    return render(request, 'test.html')
+    data = []
+    bse = {}
+    for e in Squard.objects.all():
+        data.append(e.__str__())
+    for e in range(len(data)):
+        a = data[e].split('.')
+        data[e] = APIRequests.GetCoordinates((a[0],a[1],a[2]))
+        bse[data[e]] = 'red'
+    return render(request, 'test.html', bse)
+
