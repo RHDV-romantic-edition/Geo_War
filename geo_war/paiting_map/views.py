@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import Scoreboard, Squard, Comand
 from . import APIRequests
+import json
 
 def mapindex(request):
     return render(request, 'mapindex.html')
@@ -52,7 +53,9 @@ def AlexWork(request):
         data.append(e.__str__())
     for e in range(len(data)):
         a = data[e].split('.')
+        print(a)
         data[e] = APIRequests.GetCoordinates((a[0],a[1],a[2]))
         bse[data[e]] = 'red'
-    return render(request, 'test.html', bse)
-
+    my_data = json.dumps(bse)
+    print(my_data)
+    return render(request, 'test.html', {'my_data': my_data})
