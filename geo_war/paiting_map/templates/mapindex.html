@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>TEST MAP</title>
+</head>
+<body>
+  {% if type %}
+  {% if type == 'check'  %}
+      <h2> Checked </h2>
+      <h3> {{word_1}} </h3>
+      <h3> {{word_2}} </h3>
+      <h3> {{word_3}} </h3>
+  {% endif %}
+  {% if type == 'add'  %}
+      <h2> Added </h2>
+      <h3> {{word_1}} </h3>
+      <h3> {{word_2}} </h3>
+      <h3> {{word_3}} </h3>
+  {% endif %}
+  {% endif %}
+      <ul class="sidebar-nav">
+          <li><a href="">One</a></li>
+          <li><a href="">Two</a></li>
+      </ul>
+<form action="/home/square_add/" method="POST">
+  {% csrf_token %}
+  latitude:<br>
+  <input type="text" name="latitude"><br>
+  longitude:<br>
+  <input type="text" name="longitude"><br>
+  team:
+  <input type="text" name="team">
+  <input type="submit" value="Submit">
+</form>
+<form action="/home/square_check/" method="POST">
+  {% csrf_token %}
+  Word_1:<br>
+  <input type="text" name="word_1"><br>
+  Word_2:<br>
+  <input type="text" name="word_2"><br>
+  Word_3:<br>
+  <input type="text" name="word_3"><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
