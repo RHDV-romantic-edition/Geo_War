@@ -19,4 +19,4 @@ class Squard(models.Model):
     time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
-        return '{0}.{1}.{2}'.format(self.word_1, self.word_2, self.word_3)
+        return '{0}.{1}.{2}:{3}'.format(self.word_1, self.word_2, self.word_3, self.color)

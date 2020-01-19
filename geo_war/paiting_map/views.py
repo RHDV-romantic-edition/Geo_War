@@ -11,19 +11,22 @@ def SquaresGet():
     bse = {}
     for e in Squard.objects.all():
         data.append(e.__str__())
+        print(e.__str__())
     for e in range(len(data)):
-        a = data[e].split('.')
-        print(a)
-        data[e] = APIRequests.GetCoordinates((a[0],a[1],a[2]))
-        bse[data[e]] = "#FF0000"
+        a = data[e].split(':')
+        ab = a[0].split('.')
+        data[e] = APIRequests.GetCoordinates((ab[0],ab[1],ab[2]))
+        bse[data[e]] = a[1]
+        print(bse[data[e]], end='\n')
     my_data = json.dumps(bse)
     return my_data
 
 def SquareAdd(request):
     if request.method == 'POST':
         res = request.body.decode("utf-8")
+        print(res)
         res = eval(res)
-        color_ = 'red'#res['color']
+        color_ = res['team']
         res = res['cords']
     coordinates = (res['lat'], res['lng'])
     Words = APIRequests.Get3Words(coordinates)
@@ -40,19 +43,5 @@ def Login(request):
     Team = request.POST['team']
     password = request.POST['password']
     if password == '1111':
-        return render(request, 'test.html', {'my_data': SquaresGet(), 'type': 'Suc'})
+        return render(request, 'test.html', {'my_data': SquaresGet(), 'type': 'Suc', 'team': Team})
     return render(request, 'login.html', {'type': 'error'})
-
-def AlexWork(request):
-    data = []
-    bse = {}
-    for e in Squard.objects.all():
-        data.append(e.__str__())
-    for e in range(len(data)):
-        a = data[e].split('.')
-        print(a)
-        data[e] = APIRequests.GetCoordinates((a[0],a[1],a[2]))
-        bse[data[e]] = 'red'
-    my_data = json.dumps(bse)
-    print(my_data)
-    return render(request, 'test.html', {'my_data': my_data})
