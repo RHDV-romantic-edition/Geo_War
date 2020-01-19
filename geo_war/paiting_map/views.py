@@ -2,6 +2,17 @@ from django.shortcuts import render, HttpResponse
 from .models import Squard, Comand, Delta
 from . import APIRequests
 import json
+import threading
+from multiprocessing import Process
+import datetime, time
+
+def reload_base():
+    while(True):
+        time_ = time.mktime(datetime.datetime.now().timetuple())
+        if (time_ % 10 == 5):
+            Delta.objects.all().delete()
+
+p = Process(target=reload_base)
 
 def mapindex(request):
     return render(request, 'mapindex.html')
@@ -65,3 +76,6 @@ def Take_Delta(request):
             print(bse[data[e]], end='\n')
     my_data = json.dumps(bse)
     return HttpResponse(my_data)
+
+
+p.start()
