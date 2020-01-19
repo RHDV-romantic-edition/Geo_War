@@ -7,4 +7,6 @@ urlpatterns = [
     path('', views.LoginForm, name='work'),
     path('login/', views.Login, name='work'),
     path('square_add/', views.SquareAdd, name='square_add'),
+    path('square_add/', views.SquareAdd, name='square_add'),
+    path('get_delta/', views.Take_Delta, name='TakeDelta'),
 ]

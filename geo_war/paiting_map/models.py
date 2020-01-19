@@ -11,6 +11,15 @@ class Comand(models.Model):
     def __str__(self):
         return self.name
 
+
+class Delta(models.Model):
+    Time_of_adding = models.TimeField(auto_now=True, null=False, blank=False)
+    coords = models.CharField(max_length=100, help_text="Coords")
+    color =  models.CharField(max_length=100, help_text="color")
+
+    def __str__(self):
+        return '{0}:{1}'.format(self.coords, self.color)
+
 class Squard(models.Model):
     word_1 = models.CharField(max_length=100, help_text="Word 1")
     word_2 = models.CharField(max_length=100, help_text="Word 2")

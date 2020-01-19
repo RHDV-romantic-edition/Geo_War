@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Comand, Squard
+from .models import Comand, Squard, Delta
 
 
 
@@ -10,3 +10,8 @@ class ComandAdmin(admin.ModelAdmin):
 @admin.register(Squard)
 class SquardAdmin(admin.ModelAdmin):
     list_display = ('word_1','word_2' ,'word_3')
+
+
+@admin.register(Delta)
+class DeltaAdmin(admin.ModelAdmin):
+    pass
