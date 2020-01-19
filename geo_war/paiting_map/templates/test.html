@@ -72,7 +72,7 @@
         async function CheckDelta(){
         var Url = 'http://127.0.0.1:8000/home/get_delta/'
         var delta = 0
-        axios.get('https://api.github.com/users/mapbox')
+        axios.get(Url)
         .then((response) => {
           delta = (response.data);
           });
@@ -97,15 +97,8 @@
       await sleep(5000)
       }
       async function Update(){
-        while (true) {
-          var now = Date.now();
-          if (now % 5000 == 0){
-            break
-          }
-        }
-        while (true) {
+          console.log('kek')
           CheckDelta()
-        }
       }
       map.addListener('click', function(e) {
         Url = 'http://127.0.0.1:8000/home/square_add/'
@@ -148,7 +141,7 @@
   }
 })
 }
-let timerId = setInterval(() => Update(), 2000);
+let timerId = setInterval(() => Update(), 100);
 //await Update()
     </script>
   </body>
