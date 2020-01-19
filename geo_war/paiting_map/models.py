@@ -15,7 +15,7 @@ class Squard(models.Model):
     word_1 = models.CharField(max_length=100, help_text="Word 1")
     word_2 = models.CharField(max_length=100, help_text="Word 2")
     word_3 = models.CharField(max_length=100, help_text="Word 3")
-    team = models.OneToOneField(Comand,on_delete = models.SET_NULL, null = True, help_text="Comand that is the best for this")
+    color = models.CharField(max_length=100, help_text="Color")
     time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
