@@ -4,14 +4,14 @@ from .models import Squard, Comand, Delta
 from . import APIRequests
 import json
 import threading
-from multiprocessing import Process
+from multiprocessing import Process, Pool
 import datetime, time
 
 def reload_base():
     while(True):
-        time_ = time.mktime(datetime.datetime.now().timetuple())
-        if (time_ % 10 == 5):
-            Delta.objects.all().delete()
+        Delta.objects.all().delete()
+        print('kek')
+        time.sleep(1)
 
 p = Process(target=reload_base)
 
@@ -77,4 +77,4 @@ def Take_Delta(request):
             #print(bse[data[e]], end='\n')
     return JsonResponse(bse)
 
-#p.start()
+p.start() 

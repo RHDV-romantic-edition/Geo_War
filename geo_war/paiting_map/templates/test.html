@@ -75,10 +75,10 @@
         axios.get(Url)
         .then((response) => {
           delta = (response.data);
-          });
           console.log('kek')
           console.log(delta)
           console.log('kek')
+
           for (var cell in delta){
             cords = cell.split(';')
           var rectangle = new google.maps.Rectangle({
@@ -96,6 +96,7 @@
         }
       })
       }
+    });
       }
       async function Update(){
           CheckDelta()
@@ -141,7 +142,7 @@
   }
 })
 }
-let timerId = setInterval(() => Update(), 5000);
+let timerId = setInterval(() => Update(), 100);
 //await Update()
     </script>
   </body>
