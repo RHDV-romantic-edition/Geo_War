@@ -4,7 +4,7 @@ from .models import Squard, Comand, Delta
 from . import APIRequests
 import json
 import threading
-from multiprocessing import Process, Pool
+from multiprocessing import Process
 import datetime, time
 
 def reload_base():
