@@ -9,7 +9,7 @@ class ComandAdmin(admin.ModelAdmin):
 
 @admin.register(Squard)
 class SquardAdmin(admin.ModelAdmin):
-    list_display = ('word_1','word_2' ,'word_3')
+    pass
 
 
 @admin.register(Delta)

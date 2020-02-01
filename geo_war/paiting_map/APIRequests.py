@@ -1,6 +1,8 @@
 import requests
 
 def Get3Words(coordinates):
+    COORDINATE_HEIGHT = 0.0000043
+    COORDINATE_WIDTH = 0.0000043
     Words = {}
     API_KEY = 'UVTJLDJ2'
     r = requests.get('https://api.what3words.com/v3/convert-to-3wa?coordinates={0}%2C{1}&key={2}'.format(coordinates[0],coordinates[1],API_KEY))

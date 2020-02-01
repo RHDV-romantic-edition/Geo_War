@@ -13,20 +13,16 @@ class Comand(models.Model):
 
 
 class Delta(models.Model):
-    Time_of_adding = models.TimeField(auto_now=True, null=False, blank=False)
     coords = models.CharField(max_length=100, help_text="Coords")
     color =  models.CharField(max_length=100, help_text="color")
-    
+
 
     def __str__(self):
         return '{0}:{1}'.format(self.coords, self.color)
 
 class Squard(models.Model):
-    word_1 = models.CharField(max_length=100, help_text="Word 1")
-    word_2 = models.CharField(max_length=100, help_text="Word 2")
-    word_3 = models.CharField(max_length=100, help_text="Word 3")
+    coord = models.CharField(max_length=100, help_text="Word 1")
     color = models.CharField(max_length=100, help_text="Color")
-    time = models.DateTimeField(auto_now=True,null=True, blank=True)
 
     def __str__(self):
-        return '{0}.{1}.{2}:{3}'.format(self.word_1, self.word_2, self.word_3, self.color)
+        return '{0}:{1}'.format(self.coord, self.color)
