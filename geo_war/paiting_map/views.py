@@ -26,9 +26,7 @@ def SquaresGet():
         #print(e.__str__())
     for e in range(len(data)):
         a = data[e].split(':')
-        ab = a[0].split('.')
-        data[e] = APIRequests.GetCoordinates((ab[0],ab[1],ab[2]))
-        bse[data[e]] = a[1]
+        bse[a[0]] = a[1]
         #print(bse[data[e]], end='\n')
     my_data = json.dumps(bse)
     return my_data
@@ -40,15 +38,12 @@ def SquareAdd(request):
         res = eval(res)
         color_ = res['team']
         res = res['cords']
-    coordinates = (res['lat'], res['lng'])
-    Words = APIRequests.Get3Words(coordinates)
-    #print('Square created, word_1 = {0}, word_2 = {1}, word_3 = {2}, team = lol'.format(Words['Word_1'],Words['Word_2'],Words['Word_3']))
-    Sq = Squard(word_1 = Words['Word_1'], word_2 = Words['Word_2'], word_3 = Words['Word_3'], color = color_)
+    coordinates = ''.join(str(res['x']) + ';' + str(res['y']))
+    Sq = Squard(coord = coordinates, color = color_)
     Sq.save()
-    Sq = Delta(coords = ''.join(Words['Word_1'] +'.' + Words['Word_2'] + '.' + Words['Word_3']), color = color_)
+    Sq = Delta(coord = coordinates, color = color_)
     Sq.save()
-    data = {'word_1': Words['Word_1'], 'word_2': Words['Word_2'], 'word_3': Words['Word_3'], 'type': 'add'}
-    return render(request, 'mapindex.html', data)
+    return 0
 
 def LoginForm(request):
     return render(request, 'login.html')
@@ -63,18 +58,14 @@ def Login(request):
 def Take_Delta(request):
     data = []
     bse = {}
-    if request.method == 'GET':
-        for e in Delta.objects.all():
-            data.append(e.__str__())
-            #print(e.__str__())
-        for e in range(len(data)):
-            a = data[e].split(':')
-            ab = a[0].split('.')
-            #print(ab[0],ab[1],ab[2], sep=' ')
-            ac = a[1]
-            data[e] = APIRequests.GetCoordinates((ab[0],ab[1],ab[2]))
-            bse[data[e]] = a[1]
+    for e in Squard.objects.all():
+        data.append(e.__str__())
+        #print(e.__str__())
+    for e in range(len(data)):
+        a = data[e].split(':')
+        bse[a[0]] = a[1]
+        print(bse[a[0]], end='\n')
             #print(bse[data[e]], end='\n')
     return JsonResponse(bse)
 
-p.start() 
+#p.start()
