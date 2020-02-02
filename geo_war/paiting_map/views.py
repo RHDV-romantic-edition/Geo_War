@@ -7,6 +7,9 @@ import threading
 from multiprocessing import Process
 import datetime, time
 
+w = 0.0006
+h = 0.0006
+
 def reload_base():
     while(True):
         Delta.objects.all().delete()
@@ -26,8 +29,9 @@ def SquaresGet():
         #print(e.__str__())
     for e in range(len(data)):
         a = data[e].split(':')
-        bse[a[0]] = a[1]
-        #print(bse[data[e]], end='\n')
+        coordinates = a[0].split(';')
+        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]), float(coordinates[1]) - h,float(coordinates[0]), float(coordinates[0]) + w)
+        bse[coordinates] = a[1]
     my_data = json.dumps(bse)
     return my_data
 
@@ -38,10 +42,14 @@ def SquareAdd(request):
         res = eval(res)
         color_ = res['team']
         res = res['cords']
-    coordinates = ''.join(str(res['x']) + ';' + str(res['y']))
+    
+    res['lat'] = (res['lat']//w)*w
+    res['lng'] = (res['lng']//h)*h
+
+    coordinates = ''.join(str(res['lat']) + ';' + str(res['lng']))
     Sq = Squard(coord = coordinates, color = color_)
     Sq.save()
-    Sq = Delta(coord = coordinates, color = color_)
+    Sq = Delta(coords = coordinates, color = color_)
     Sq.save()
     return 0
 
@@ -58,14 +66,14 @@ def Login(request):
 def Take_Delta(request):
     data = []
     bse = {}
-    for e in Squard.objects.all():
+    for e in Delta.objects.all():
         data.append(e.__str__())
-        #print(e.__str__())
     for e in range(len(data)):
         a = data[e].split(':')
-        bse[a[0]] = a[1]
-        print(bse[a[0]], end='\n')
-            #print(bse[data[e]], end='\n')
+        coordinates = a[0].split(';')
+        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]), float(coordinates[1]) - h,float(coordinates[0]), float(coordinates[0]) + w)
+        bse[coordinates] = a[1]
+        print(bse[coordinates], end='\n')
     return JsonResponse(bse)
 
 #p.start()
