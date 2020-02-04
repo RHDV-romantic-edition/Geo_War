@@ -7,7 +7,7 @@ import threading
 from multiprocessing import Process
 import datetime, time
 
-w = 0.0006
+w = 0.001
 h = 0.0006
 
 def reload_base():
@@ -30,7 +30,7 @@ def SquaresGet():
     for e in range(len(data)):
         a = data[e].split(':')
         coordinates = a[0].split(';')
-        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]), float(coordinates[1]) - h,float(coordinates[0]), float(coordinates[0]) + w)
+        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]), float(coordinates[1]) + h,float(coordinates[0]) + w, float(coordinates[0]))
         bse[coordinates] = a[1]
     my_data = json.dumps(bse)
     return my_data
@@ -42,16 +42,17 @@ def SquareAdd(request):
         res = eval(res)
         color_ = res['team']
         res = res['cords']
-    
-    res['lat'] = (res['lat']//w)*w
-    res['lng'] = (res['lng']//h)*h
 
-    coordinates = ''.join(str(res['lat']) + ';' + str(res['lng']))
+    res['lng'] = (res['lng']//w)*w
+    res['lat'] = (res['lat']//h)*h
+
+    coordinates = ''.join(str(res['lng']) + ';' + str(res['lat']))
     Sq = Squard(coord = coordinates, color = color_)
     Sq.save()
     Sq = Delta(coords = coordinates, color = color_)
     Sq.save()
-    return 0
+    print('FLEEXXXXXX')
+    return JsonResponse({0:0})
 
 def LoginForm(request):
     return render(request, 'login.html')
@@ -71,9 +72,8 @@ def Take_Delta(request):
     for e in range(len(data)):
         a = data[e].split(':')
         coordinates = a[0].split(';')
-        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]), float(coordinates[1]) - h,float(coordinates[0]), float(coordinates[0]) + w)
+        coordinates = '{0};{1};{2};{3}'.format(float(coordinates[1]) + h, float(coordinates[1]),float(coordinates[0]) + w, float(coordinates[0]))
         bse[coordinates] = a[1]
-        print(bse[coordinates], end='\n')
     return JsonResponse(bse)
 
-#p.start()
+p.start()
