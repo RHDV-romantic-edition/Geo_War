@@ -38,8 +38,7 @@
     <script>
     
       var gridData;
-      // Add the what3words grid to the Google Map data layer once the desired zoom level is meet
-      map.addListener('bounds_changed', function() {
+      myMap.addListener('bounds_changed', function() {
         const zoom = map.getZoom();
         const loadFeatures = zoom > 17;
 
@@ -86,20 +85,34 @@
 
           for (var cell in delta){
             cords = cell.split(';')
-          var rectangle = new google.maps.Rectangle({
-        strokeColor: '#FF000000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: delta[cell],
-        fillOpacity: 0.35,
-        map: map,
-        bounds: {
-          north: parseFloat(cords[0]),
-          south: parseFloat(cords[1]),
-          east: parseFloat(cords[2]),
-          west: parseFloat(cords[3]),
-        }
-      })
+            rectangle = new ymaps.Rectangle([
+        // Задаем координаты диагональных углов прямоугольника.
+        [parseFloat(cords[3]), parseFloat(cords[0])],
+        [parseFloat(cords[2]), parseFloat(cords[1])]
+    , {
+        //Свойства
+        //hintContent: '',
+        //balloonContent: 'Прямоугольник 1'
+    }, {
+        // Опции.
+        // Цвет и прозрачность заливки.
+        fillColor: data[cell],
+        // Дополнительная прозрачность заливки..
+        // Итоговая прозрачность будет не #33(0.2), а 0.1(0.2*0.5).
+        fillOpacity: 0.1,
+        // Цвет обводки.
+        strokeColor: '#0000FF',
+        // Прозрачность обводки.
+        strokeOpacity: 1,
+        // Ширина линии.
+        strokeWidth: 2,
+        // Радиус скругления углов.
+        // Данная опция принимается только прямоугольником.
+        borderRadius: 0
+    });
+
+    myMap.geoObjects
+        .add(myRectangle)
       }
     });
       }
@@ -133,20 +146,35 @@
     for (var cell in data){
       cords = cell.split(';')
       //console.log(cell)
-    var rectangle = new google.maps.Rectangle({
-  strokeColor: '#FF000000',
-  strokeOpacity: 0.8,
-  strokeWeight: 2,
-  fillColor: data[cell],
-  fillOpacity: 0.35,
-  map: map,
-  bounds: {
-    north: parseFloat(cords[0]),
-    south: parseFloat(cords[1]),
-    east: parseFloat(cords[2]),
-    west: parseFloat(cords[3]),
-  }
-})
+
+    rectangle = new ymaps.Rectangle([
+        // Задаем координаты диагональных углов прямоугольника.
+        [parseFloat(cords[3]), parseFloat(cords[0])],
+        [parseFloat(cords[2]), parseFloat(cords[1])]
+    , {
+        //Свойства
+        //hintContent: '',
+        //balloonContent: 'Прямоугольник 1'
+    }, {
+        // Опции.
+        // Цвет и прозрачность заливки.
+        fillColor: data[cell],
+        // Дополнительная прозрачность заливки..
+        // Итоговая прозрачность будет не #33(0.2), а 0.1(0.2*0.5).
+        fillOpacity: 0.1,
+        // Цвет обводки.
+        strokeColor: '#0000FF',
+        // Прозрачность обводки.
+        strokeOpacity: 1,
+        // Ширина линии.
+        strokeWidth: 2,
+        // Радиус скругления углов.
+        // Данная опция принимается только прямоугольником.
+        borderRadius: 0
+    });
+
+    myMap.geoObjects
+        .add(myRectangle)
 }
 let timerId = setInterval(() => Update(), 500);
 //await Update()

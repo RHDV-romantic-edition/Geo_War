@@ -19,7 +19,7 @@ def reload_base():
 p = Process(target=reload_base)
 
 def mapindex(request):
-    return render(request, 'mapindex.html')
+    return render(request, 'main.html')
 
 def SquaresGet():
     data = []
@@ -61,7 +61,7 @@ def Login(request):
     Team = request.POST['team']
     password = request.POST['password']
     if password == '1111':
-        return render(request, 'test.html', {'my_data': SquaresGet(), 'type': 'Suc', 'team': Team})
+        return render(request, 'main.html', {'my_data': SquaresGet(), 'type': 'Suc', 'team': Team})
     return render(request, 'login.html', {'type': 'error'})
 
 def Take_Delta(request):
