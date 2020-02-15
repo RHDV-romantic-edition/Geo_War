@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from .models import Squard, Comand, Delta
 #import Process to start functions parallel
 from multiprocessing import Process
-<<<<<<< HEAD
 #import datretime and time to clear Delta Tables
 import datetime, time, json
 #import variables from Config file
