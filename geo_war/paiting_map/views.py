@@ -1,22 +1,23 @@
+#import django libraries 
 from django.shortcuts import render
 from django.http import JsonResponse
+#import DataBases from .models
 from .models import Squard, Comand, Delta
-from . import APIRequests
-import json
-import threading
+#import Process to start functions parallel
 from multiprocessing import Process
-import datetime, time
+#import datretime and time to clear Delta Tables
+import datetime, time, json
+#import variables from Config file
+from .CONFIG import WIGTH, HEIGHT
+w = WIGTH
+h = HEIGHT
 
-w = 0.001
-h = 0.0006
-
+#the functoin that cleans DeltaBase
 def reload_base():
     while(True):
         Delta.objects.all().delete()
         print('kek')
         time.sleep(1)
-
-p = Process(target=reload_base)
 
 def mapindex(request):
     return render(request, 'main.html')
@@ -76,4 +77,6 @@ def Take_Delta(request):
         bse[coordinates] = a[1]
     return JsonResponse(bse)
 
+#Start MultiProcessing
+p = Process(target=reload_base)
 p.start()
