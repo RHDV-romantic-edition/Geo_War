@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import Squard, Comand, Delta
 #import Process to start functions parallel
 from multiprocessing import Process
+<<<<<<< HEAD
 #import datretime and time to clear Delta Tables
 import datetime, time, json
 #import variables from Config file
@@ -39,19 +40,23 @@ def SquaresGet():
 def SquareAdd(request):
     if request.method == 'POST':
         res = request.body.decode("utf-8")
-        #print(res)
         res = eval(res)
+        print('______________________________-')
+        print(res)
+        print('______________________________-')
         color_ = res['team']
+        print('Color is: ', color_)
         res = res['cords']
+        print('Cords is: ', res)
 
-    res['lng'] = (res['lng']//w)*w
-    res['lat'] = (res['lat']//h)*h
+    res[0] = (res[0]//w)*w
+    res[1] = (res[1]//h)*h
 
-    coordinates = ''.join(str(res['lng']) + ';' + str(res['lat']))
+    coordinates = ''.join(str(res[0]) + ';' + str(res[1]))
     Sq = Squard(coord = coordinates, color = color_)
     Sq.save()
-    Sq = Delta(coords = coordinates, color = color_)
-    Sq.save()
+    #Sq = Delta(coords = coordinates, color = color_)
+    #Sq.save()
     print('FLEEXXXXXX')
     return JsonResponse({0:0})
 
@@ -59,10 +64,20 @@ def LoginForm(request):
     return render(request, 'login.html')
 
 def Login(request):
+    col = {
+    'blue': '#0000FF',
+    'green': '#00FF00',
+    'red': '#FF0000',
+    'white': '#FFFFFF',
+
+    }
     Team = request.POST['team']
     password = request.POST['password']
     if password == '1111':
-        return render(request, 'main.html', {'my_data': SquaresGet(), 'type': 'Suc', 'team': Team})
+        print('-----------COLOR-----------')
+        print(col[Team])
+        print('-----------------------')
+        return render(request, 'main.html', {'my_data': SquaresGet(), 'type': 'Suc', 'team': col[Team]})
     return render(request, 'login.html', {'type': 'error'})
 
 def Take_Delta(request):

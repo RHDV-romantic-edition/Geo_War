@@ -1,27 +1,188 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
-    <head>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script
-            src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f35954be-09da-46b5-a343-e252146f8c71"
-            type="text/javascript"></script>
-        <style>
-            #map {
-                height: 100%;
-            }
-            body,
-            html {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-        </style>
-    </head>
 
-    <body>
-        <a href="http://127.0.0.1:8000/home/">logout</a>
-        <div id="map"></div>
-        <script src="{% static 'js/map.js' %}"></script>
-    </body>
+  <head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f35954be-09da-46b5-a343-e252146f8c71" type="text/javascript"></script>
+    <style>
+      #map {
+        height: 100%;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="http://127.0.0.1:8000/home/">logout</a>
+    <div id="map"></div>
+    <script>
+    var myMap;
+
+        // Дождёмся загрузки API и готовности DOM.
+        ymaps.ready(init);
+
+        function init () {
+    // Создание экземпляра карты и его привязка к контейнеру с
+    // заданным id ("map").
+        myMap = new ymaps.Map('map', {
+        center: [55.76, 37.64], // Москва
+        zoom: 10
+    }, {
+        searchControlProvider: 'yandex#search'
+    });
+    myMap.events.add('click', function (e) {
+      var coords = e.get('coords');
+      Url = 'http://127.0.0.1:8000/home/square_add/'
+      axios({
+        method: 'post',
+        url: Url,
+        data: {
+        'cords': coords,
+          'team': '{{team}}'
+            },
+        xsrfHeaderName: "X-CSRFToken",
+        headers:
+        {
+          "X-CSRFToken": "{{csrf_token}}"
+        }
+        })
+        .then(response => {
+        //console.log(response)
+        })
+        .catch(error => {
+       //console.log(error.response)
+      });
+      var StartX = Math.floor(coords[0]/0.0006) * 0.0006
+      var StartY = Math.floor(coords[1]/0.001) * 0.001
+      console.log('{{team}}')
+      rectangle = new ymaps.Rectangle([
+      // Задаем координаты диагональных углов прямоугольника.
+      [StartX, StartY],
+      [StartX + 0.0006, StartY + 0.001]
+    ]
+  , {
+      //Свойства
+      //hintContent: '',
+      balloonContent: 'Прямоугольник 1'
+  }, {
+      // Опции.
+      // Цвет и прозрачность заливки.
+      fillColor: data[cell],
+      // Дополнительная прозрачность заливки..
+      // Итоговая прозрачность будет не #33(0.2), а 0.1(0.2*0.5).
+      fillOpacity: 0.1,
+      // Цвет обводки.
+      strokeColor: '{{team}}',
+      // Прозрачность обводки.
+      strokeOpacity: 1,
+      // Ширина линии.
+      strokeWidth: 2,
+      // Радиус скругления углов.
+      // Данная опция принимается только прямоугольником.
+      borderRadius: 0
+  });
+
+  myMap.geoObjects
+      .add(rectangle)
+    });
+    //{"southwest":{"lng":37.62931,"lat":55.742373},"northeast":{"lng":37.629358,"lat":55.7424}}
+        async function CheckDelta(){
+        var Url = 'http://127.0.0.1:8000/home/get_delta/'
+        var delta = 0
+        axios.get(Url)
+        .then((response) => {
+          delta = (response.data);
+          console.log('kek')
+          console.log(delta)
+          console.log('kek')
+
+          for (var cell in delta){
+            cords = cell.split(';')
+
+
+        rectangle = new ymaps.Rectangle([
+        // Задаем координаты диагональных углов прямоугольника.
+        [parseFloat(cords[3]), parseFloat(cords[0])],
+        [parseFloat(cords[2]), parseFloat(cords[1])]
+      ]
+    , {
+        //Свойства
+        //hintContent: '',
+        balloonContent: 'Прямоугольник 1'
+    }, {
+        // Опции.
+        // Цвет и прозрачность заливки.
+        fillColor: data[cell],
+        // Дополнительная прозрачность заливки..
+        // Итоговая прозрачность будет не #33(0.2), а 0.1(0.2*0.5).
+        fillOpacity: 0.1,
+        // Цвет обводки.
+        strokeColor: '#0000FF',
+        // Прозрачность обводки.
+        strokeOpacity: 1,
+        // Ширина линии.
+        strokeWidth: 2,
+        // Радиус скругления углов.
+        // Данная опция принимается только прямоугольником.
+        borderRadius: 0
+    });
+
+    myMap.geoObjects
+        .add(rectangle)
+      }
+    });
+      }
+      async function Update(){
+          CheckDelta()
+      }
+
+      var data = {{my_data|safe}};
+    for (var cell in data){
+      cords = cell.split(';')
+      console.log('PRINTED')
+      //console.log(cell)
+
+    rectangle = new ymaps.Rectangle([
+        // Задаем координаты диагональных углов прямоугольника.
+        [parseFloat(cords[3]), parseFloat(cords[0])],
+        [parseFloat(cords[2]), parseFloat(cords[1])]
+      ]
+    , {
+        //Свойства
+        //hintContent: '',
+        //balloonContent: 'Прямоугольник 1'
+    }, {
+        // Опции.
+        // Цвет и прозрачность заливки.
+        fillColor: data[cell],
+        // Дополнительная прозрачность заливки..
+        // Итоговая прозрачность будет не #33(0.2), а 0.1(0.2*0.5).
+        fillOpacity: 0.1,
+        // Цвет обводки.
+        strokeColor: '#0000FF',
+        // Прозрачность обводки.
+        strokeOpacity: 1,
+        // Ширина линии.
+        strokeWidth: 2,
+        // Радиус скругления углов.
+        // Данная опция принимается только прямоугольником.
+        borderRadius: 0
+    });
+
+    myMap.geoObjects
+        .add(rectangle)
+    }
+    let timerId = setInterval(() => Update(), 500);
+    //await Update()
+    //----------------------------
+}
+</script>
+
+  </body>
 </html>
